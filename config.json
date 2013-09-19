@@ -1,0 +1,137 @@
+{
+    "settings": {
+        "default": {
+            "choice": null, 
+            "choice_example": [
+                "genki1=1:20", 
+                "genki2=2:10"
+            ], 
+            "db": "kanji.db", 
+            "exit": false, 
+            "exp": 4, 
+            "keydebug": false, 
+            "keymap": "urwid", 
+            "lang": "en", 
+            "low_mem": false, 
+            "p_max": 99, 
+            "p_min": 4, 
+            "permutation": false,
+            "print_selected": false, 
+            "prio_proceed": false, 
+            "prompt_list": "meaning", 
+            "quiet": false, 
+            "ui_class": "urwid", 
+            "verbosity": 1
+        }
+    },
+
+    "maps": {
+        "default": {
+            "exit": [
+                "esc", 
+                "q"
+            ], 
+            "hide": [
+                "down"
+            ], 
+            "prioritylist": [
+                "0", 
+                "1", 
+                "2", 
+                "3", 
+                "4", 
+                "5", 
+                "6", 
+                "7", 
+                "8", 
+                "9"
+            ], 
+            "proceed": [
+                "up", 
+                "mouse_click_left", 
+                "mouse_click"
+            ], 
+            "skip": [
+                "s"
+            ]
+        }, 
+        "urwid": {
+            "exit": [
+                "esc", 
+                "q"
+            ], 
+            "hide": [
+                "down"
+            ], 
+            "prioritylist": [
+                "0", 
+                "1", 
+                "2", 
+                "3", 
+                "4", 
+                "5", 
+                "6", 
+                "7", 
+                "8", 
+                "9"
+            ], 
+            "proceed": [
+                "up", 
+                "mouse_click_left", 
+                "mouse_click"
+            ], 
+            "skip": [
+                "s"
+            ]
+        }
+    },
+
+    "captions": {
+        "de": {
+            "cb_kun": "Kun Lesung", 
+            "cb_meaning": "Bedeutung", 
+            "cb_misc": "Weiteres", 
+            "cb_on": "On Lesung", 
+            "cb_sign": "Zeichen", 
+            "flipcount": "(flips)", 
+            "footer_desc": "Priorit\u00e4t setzen: `{prioritymin}`-`{prioritymax}`   Weiter: `{proceed}`   \u00dcberspringen: `{skip}`", 
+            "footer_prio": "Priorit\u00e4t: {priority}", 
+            "header_text": "Zeige: ", 
+            "label_kun": "\u25b6  ", 
+            "label_kun_suffix": "", 
+            "label_meaning": "", 
+            "label_meaning_suffix": "", 
+            "label_misc": "", 
+            "label_misc_suffix": "", 
+            "label_on": "\u25b7  ", 
+            "label_on_suffix": "", 
+            "label_sign": "", 
+            "label_sign_suffix": "", 
+            "startup_msg": "Beginne mit beliebiger Taste", 
+            "startup_sign": "\u6f22\u5b57"
+        }, 
+        "en": {
+            "cb_kun": "kun reading", 
+            "cb_meaning": "meaning", 
+            "cb_misc": "miscellaneous", 
+            "cb_on": "on reading", 
+            "cb_sign": "sign", 
+            "flipcount": "(flips)", 
+            "footer_desc": "set priority: `{prioritymin}`-`{prioritymax}`   next: `{proceed}`   skip: `{skip}`", 
+            "footer_prio": "Priority: {priority}", 
+            "header_text": "Prompt for: ", 
+            "label_kun": "\u25ba  ", 
+            "label_kun_suffix": "", 
+            "label_meaning": "", 
+            "label_meaning_suffix": "", 
+            "label_misc": "", 
+            "label_misc_suffix": "", 
+            "label_on": "\u25b7  ", 
+            "label_on_suffix": "", 
+            "label_sign": "", 
+            "label_sign_suffix": "", 
+            "startup_msg": "Start with any key", 
+            "startup_sign": "\u6f22\u5b57"
+        }
+    }
+}

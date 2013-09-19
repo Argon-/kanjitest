@@ -1,0 +1,10 @@
+# build & cache dirs
+__pycache__
+
+
+# bytecode
+*.pyc
+
+
+# OS dependent
+.DS_Store
