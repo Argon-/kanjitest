@@ -39,6 +39,7 @@ except (NameError, IndexError):
     loc = 'kanji.db'
 
 
+# some samples
 
 l = [ \
 ['genki1',   1, 3, dict(sign = u'一', \
