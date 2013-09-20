@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf8 -*-
 #
-# This file is part of REPLACEME
+# This file is part of kanji_test
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ from helpers.func import max_priority
 ####################
 
 args = CArgs()
-parser = argparse.ArgumentParser(description='Specify the kanji you want to test.',
+parser = argparse.ArgumentParser(#description='Specify the kanji you want to test.',
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                  add_help=False)
 conf = Config(os.path.dirname(os.path.abspath( __file__ )) + os.sep + 'config.json')
@@ -54,10 +54,11 @@ conf.keymap = args.keymap
 
 if args.permutation:
     args.exp = 0
-if args.choice is None:
-    args.p_min, args.p_max = 0, max_priority()
 if args.quiet:
     args.verbosity = -1
+if not os.path.isfile(args.db):
+    print('[db] Error: no file found for: ' + str(args.db))
+    sys.exit(1)
 
 args.choice = expand_choice(args.choice)
 UI_Controller = getattr(import_module('ui.' + args.ui_class), 'UI_Controller')
@@ -74,7 +75,7 @@ l = []
 args.verbosity > 1 and print('[args] ' + str(args.choice))
 
 if args.choice is None:
-    l = k.select_all_keyonly() if args.low_mem else k.select_all()
+    l = k.select_all_keyonly(args.p_min, args.p_max) if args.low_mem else k.select_all(args.p_min, args.p_max)
 else:
     for d in args.choice:
         if args.low_mem:
@@ -87,7 +88,6 @@ if args.print_selected:
         args.verbosity > 0 and print(os.linesep.join(['book: ' + book + ' \tid: ' + str(kid) for book, kid in l]))
     else:
         args.verbosity > 0 and print(db_list_to_string(l))
-
 
 
 ################
@@ -127,6 +127,12 @@ def reveal_or_next(ui, force=False, go_back=False):
 reveal_or_next.revealed = False
 
 
+def update_priority(ui, p_new):
+    ui.set_priority(p_new)
+    k.update_p(KDict.extract_book(sign()), KDict.extract_id(sign()), p_new)
+    sign(seed=KDict.update_priority(sign(), p_new))
+
+
 def input_handler(ui, key):
     if rnd.current is None and not ui.is_key(key, 'exit'):
         reveal_or_next(ui, force=True)           # start no matter what key was pressed (except exit)
@@ -138,9 +144,22 @@ def input_handler(ui, key):
         if ui.to_priority(key) is KDict.extract_priority(sign()):
             pass
         else:
-            ui.set_priority(key)
-            k.update_p(KDict.extract_book(sign()), KDict.extract_id(sign()), ui.to_priority(key))
-            sign(seed=KDict.update_priority(sign(), ui.to_priority(key)))
+            p_new = ui.to_priority(key)
+            update_priority(ui, p_new if args.no_scheck or (p_new < 100 and p_new > -100) else KDict.extract_priority(sign()))
+        if args.prio_proceed:
+            reveal_or_next(ui)
+    elif ui.is_key(key, 'inc_priority'):
+        p_old = KDict.extract_priority(sign())
+        p_scheck = (p_old + 1) if args.no_scheck or (p_old + 1) < 100 else 100
+        if p_old is not p_scheck:
+            update_priority(ui, p_scheck)
+        if args.prio_proceed:
+            reveal_or_next(ui)
+    elif ui.is_key(key, 'dec_priority'):
+        p_old = KDict.extract_priority(sign())
+        p_scheck = (p_old - 1) if args.no_scheck or (p_old - 1) > -100 else -100
+        if p_old is not p_scheck:
+            update_priority(ui, p_scheck)
         if args.prio_proceed:
             reveal_or_next(ui)
     elif ui.is_key(key, 'proceed'):              # reveal or next sign

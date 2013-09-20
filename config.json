@@ -13,13 +13,14 @@
             "keymap": "urwid", 
             "lang": "en", 
             "low_mem": false, 
-            "p_max": 99, 
+            "p_max": 100, 
             "p_min": 4, 
             "permutation": false,
             "print_selected": false, 
             "prio_proceed": false, 
             "prompt_list": "meaning", 
             "quiet": false, 
+            "no_scheck" : false,
             "ui_class": "urwid", 
             "verbosity": 1
         }
@@ -27,6 +28,12 @@
 
     "maps": {
         "default": {
+            "inc_priority" : [
+                "+"
+            ],
+            "dec_priority" : [
+                "-"
+            ],
             "exit": [
                 "esc", 
                 "q"
@@ -56,6 +63,12 @@
             ]
         }, 
         "urwid": {
+            "inc_priority" : [
+                "+"
+            ],
+            "dec_priority" : [
+                "-"
+            ],
             "exit": [
                 "esc", 
                 "q"

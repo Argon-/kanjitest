@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf8 -*-
 #
-# This file is part of REPLACEME
+# This file is part of kanji_test
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ default_settings['default'] = {
                         'choice_example' : ['genki1=1:20', 'genki2=2:10'],
                         'prompt_list'    : 'meaning',
                         'p_min'          : 4,
-                        'p_max'          : 99,
+                        'p_max'          : 100,
                         'exp'            : 4,
                         'permutation'    : False,
                         'prio_proceed'   : False,
@@ -40,6 +40,7 @@ default_settings['default'] = {
                         'quiet'          : False,
                         'exit'           : False,
                         'keydebug'       : False,
+                        'no_scheck'      : False,
                         }
 
 
@@ -51,6 +52,8 @@ default_maps['default'] = {
                         'proceed' : ['up', 'mouse_click_left', 'mouse_click'],
                         'hide'    : ['down'],
                         'prioritylist' : ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+                        'inc_priority' : ['+'],
+                        'dec_priority' : ['-'],
                         }
 default_maps['urwid']   = {
                         'exit'    : ['esc', 'q'],
@@ -58,6 +61,8 @@ default_maps['urwid']   = {
                         'proceed' : ['up', 'mouse_click_left', 'mouse_click'],
                         'hide'    : ['down'],
                         'prioritylist' : ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+                        'inc_priority' : ['+'],
+                        'dec_priority' : ['-'],
                         }
 
 default_captions = OrderedDict()

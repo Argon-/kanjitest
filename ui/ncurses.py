@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf8 -*-
 #
-# This file is part of REPLACEME
+# This file is part of kanji_test
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -64,8 +64,8 @@ class UI_Controller(Meta_UI_Controller):
 
 
     def test(self):
-        # self.stdscr.getmaxyx()[0] is 38 oô
-        self.top.addstr('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+        # self.stdscr.getmaxyx()[0] 
+        self.top.addstr('aaaaaaaaaaaaaaaaaa')
         #self.stdscr.addstr('bbbbb')
         self.top.refresh()
         self.stdscr.refresh()

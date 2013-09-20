@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf8 -*-
 #
-# This file is part of REPLACEME
+# This file is part of kanji_test
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -36,9 +36,19 @@ def set_argument(arg):
 
 def prompt_argument(arg):
     try:
-        return [i.strip() for i in re.match(r'^(sign|on|kun|meaning|misc)(,[ ]*(sign|on|kun|meaning|misc))*$', arg).group(0).split(',')]
+        return [i.strip() for i in re.match(r'^(sign|on|kun|meaning|misc)(,[ ]*(sign|on|kun|meaning|misc))*[,]?$', arg).group(0).split(',')]
     except:
         raise argparse.ArgumentTypeError('value `{s}` does not match the required format'.format(s=arg))
+
+
+def positive_argument(arg):
+    try:
+        int(arg)
+    except:
+        raise argparse.ArgumentTypeError('value `{s}` is no valid positive in range 0..99'.format(s=arg))
+    if int(arg) > -1 and int(arg) < 100:
+        return int(arg)
+    raise argparse.ArgumentTypeError('value `{s}` is no valid positive in range 0..99'.format(s=arg))
 
 
 def expand_choice(choice):
@@ -58,18 +68,18 @@ def expand_choice(choice):
 def add_parser_args(parser, c):
     parser.add_argument('--set', '-s', dest='choice', metavar='textbook(=from:to)*',
                     default=c.get('choice', None), action='append', type=set_argument, required=False,
-                    help='Limit the kanji to test. Multiple usage possible.')
-    parser.add_argument('--prompt', '-pt',dest='prompt_list', metavar='sign|on|kun|meaning|misc',
+                    help='Filter the kanji to test. Multiple usage possible. Do not specify if you want to test the whole database.')
+    parser.add_argument('--prompt', '-pt',dest='prompt_list', metavar='sign,on,kun,meaning,misc',
                     default=c.get('prompt_list', 'meaning'), action='store', type=prompt_argument, required=False,
                     help='The part(s) of the kanji to be visible. (comma separated list)')
-    parser.add_argument('--priority', '-p', dest='p_min', metavar='n',
+    parser.add_argument('--priority', '-pmin', '-p', dest='p_min', metavar='n',
                     default=c.get('p_min', 4), action='store', type=int, required=False,
                     help='The min required priority for a kanji to be eligible.')
     parser.add_argument('--priority_max', '-pmax', dest='p_max', metavar='n',
                     default=c.get('p_max', max_priority()), action='store', type=int, required=False,
                     help='The max allowed priority for a kanji to be eligible.')
     parser.add_argument('--depth', '-d', dest='exp', metavar='n',
-                    default=c.get('exp', 4), action='store', type=int, required=False,
+                    default=c.get('exp', 4), action='store', type=positive_argument, required=False,
                     help='Specify the `randomness` used for shuffling the kanji. A value of 0 results in a permutation.')
     parser.add_argument('--perm', '-pm',dest='permutation', action='store_true',
                     default=c.get('permutation', False), required=False,
@@ -101,23 +111,26 @@ def add_parser_args(parser, c):
     parser.add_argument('--small_footprint', '-sp', '-lm', dest='low_mem', action='store_true',
                     default=c.get('low_mem', False), required=False,
                     help='Decrease memory usage. Results in slightly increased load times for displaying a sign.')
+    parser.add_argument('--no_sanity_check', dest='no_scheck', action='store_true',
+                    default=c.get('no_scheck', False), required=False,
+                    help='Perform sanity checks on various values like priority.')
     parser.add_argument('--verbose', '-v', dest='verbosity', action='count',
                     default=c.get('verbosity', 1), required=False,
                     help='Print additional output. Use it multiple times to increase the verbosity level.')
     parser.add_argument('--quiet', '-q', dest='quiet', action='store_true',
                     default=c.get('quiet', False), required=False,
                     help='Supress every kind of output except of interpreter messages. (takes precedence)')
-    parser.add_argument('--version', '-version', action='version', version='%(prog)s 0.1 dev',
-                    help='Show the version number and exit.')
     #parser.add_argument('--no-config', dest='no_config', action='store_true',
     #                default=False, required=False,
     #                help='Load no configuration files, use default values.')
-    parser.add_argument('--exit', '-e',dest='exit', action='store_true',
-                    default=c.get('exit', False), required=False,
-                    help='Quit before entering the UI main loop.')
-    parser.add_argument('--debug_key', dest='keydebug', action='store_true',
+    parser.add_argument('--keydebug', dest='keydebug', action='store_true',
                     default=c.get('keydebug', False), required=False,
                     help='Print keypress string.')
+    parser.add_argument('--exit', '-e',dest='exit', action='store_true',
+                    default=c.get('exit', False), required=False,
+                    help='Exit before entering the UI main loop.')
+    parser.add_argument('--version', '-version', action='version', version='%(prog)s 0.1',
+                    help='Show the version number and exit.')
     parser.add_argument('--help', '-h', action='help',
                     help='Show this help message and exit.')
 

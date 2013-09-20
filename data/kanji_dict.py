@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf8 -*-
 #
-# This file is part of REPLACEME
+# This file is part of kanji_test
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -72,7 +72,7 @@ class KDict:
                           AND    kanji.priority > ?
                           AND    kanji.priority < ?
                           AND    kanji.id < ?
-                          AND    kanji.id > ?''', [book, p_min-1, p_max, to_id+1, from_id-1])
+                          AND    kanji.id > ?''', [book, p_min-1, p_max+1, to_id+1, from_id-1])
         return self.c.fetchall()
 
     def select_keyonly(self, book, from_id, to_id, p_min = 0, p_max = 2**31):
@@ -81,15 +81,20 @@ class KDict:
                           AND    kanji.priority > ?
                           AND    kanji.priority < ?
                           AND    kanji.id < ?
-                          AND    kanji.id > ?''', [book, p_min-1, p_max, to_id+1, from_id-1])
+                          AND    kanji.id > ?''', [book, p_min-1, p_max+1, to_id+1, from_id-1])
         return self.c.fetchall()
 
-    def select_all(self):
-        self.c.execute('''SELECT book, id, d, priority FROM kanji''')
+    def select_all(self, p_min = 0, p_max = 2**31):
+        self.c.execute('''SELECT book, id, d, priority FROM kanji
+                          WHERE  kanji.priority > ?
+                          AND    kanji.priority < ?''', [p_min-1, p_max+1])
+
         return self.c.fetchall()
 
-    def select_all_keyonly(self):
-        self.c.execute('''SELECT book, id FROM kanji''')
+    def select_all_keyonly(self, p_min = 0, p_max = 2**31):
+        self.c.execute('''SELECT book, id FROM kanji
+                          WHERE  kanji.priority > ?
+                          AND    kanji.priority < ?''', [p_min-1, p_max+1])
         return self.c.fetchall()
 
     def select_one(self, book, kid):

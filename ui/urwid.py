@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf8 -*-
 #
-# This file is part of REPLACEME
+# This file is part of kanji_test
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -272,7 +272,7 @@ class UI_Controller(Meta_UI_Controller):
 
 
     def set_priority(self, priority):
-        self.__set_footer_columns_content(0, 'footer_prio', self.tr('footer_prio', priority=priority), 'left')
+        self.__set_footer_columns_content(0, 'footer_prio', self.tr('footer_prio', priority=str(priority)), 'left')
 
 
     def to_priority(self, key):
