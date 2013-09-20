@@ -91,7 +91,7 @@ def add_parser_args(parser, c):
     #                default='default', action='store', type=str, required=False,
     #                help='A profile specified in your configuration file.')
     parser.add_argument('--database', '-db', dest='db', metavar='your.db',
-                    default=c.get('db', 'kanji.db'), action='store', type=str, required=False,
+                    default=c.get('db_relative', 'kanji.db'), action='store', type=str, required=False,
                     help='The location of your kanji sqlite3 database.')
     #parser.add_argument('--config', '-c', dest='config', metavar='conf.json',
     #                default='', action='store', type=str, required=False,

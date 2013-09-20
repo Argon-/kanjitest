@@ -6,7 +6,7 @@
                 "genki1=1:20", 
                 "genki2=2:10"
             ], 
-            "db": "kanji.db", 
+            "db_relative": "kanji.db", 
             "exit": false, 
             "exp": 4, 
             "keydebug": false, 

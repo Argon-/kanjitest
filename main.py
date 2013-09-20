@@ -44,7 +44,7 @@ args = CArgs()
 parser = argparse.ArgumentParser(#description='Specify the kanji you want to test.',
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                  add_help=False)
-conf = Config(os.path.dirname(os.path.abspath( __file__ )) + os.sep + 'config.json')
+conf = Config('config.json', os.path.dirname(os.path.abspath( __file__ )) + os.sep)    # TODO: 
 
 add_parser_args(parser, conf)
 parser.parse_args(namespace=args)
