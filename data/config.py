@@ -17,6 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import os
 try:
     import json
 except ImportError:
@@ -33,8 +34,9 @@ class Configuration_Exception(Exception):
 
 class Config(object):
 
-    def __init__(self, conffile, profile='default', lang='en', keymap = 'default', strict_profile=False, strict_lang=False, strict_keymap=False):
-        self.conffile = conffile
+    def __init__(self, conffile, relpath, profile='default', lang='en', keymap = 'default', strict_profile=False, strict_lang=False, strict_keymap=False):
+        self.relpath = relpath
+        self.conffile = relpath + conffile
 
         self.default_settings = default_settings
         self.default_captions = default_captions
@@ -47,11 +49,10 @@ class Config(object):
         self.strict_profile = strict_profile
         self.strict_lang = strict_lang
         self.strict_keymap = strict_keymap
+        self.__load_config()
         self.__set_profile(profile)
         self.__set_lang(lang)
         self.__set_map(keymap)
-
-        self.__load_config()
 
     
     def __load_config(self):
@@ -70,6 +71,10 @@ class Config(object):
                 self.maps = c['maps']
             else:
                 self.get('quiet', False) or print('[config] Warning: no dictionary found for: maps')
+
+            for prf in self.settings:
+                if 'db_relative' in self.settings[prf]:
+                    self.settings[prf]['db_relative'] = self.relpath + self.settings[prf]['db_relative'] # horrible
         except FileNotFoundError as e:
             self.get('quiet', False) or print('[config] Error: no file found for ' + str(self.conffile))
             self.get('quiet', False) or print('[config] falling back to default values')

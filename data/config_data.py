@@ -30,7 +30,7 @@ default_settings['default'] = {
                         'exp'            : 4,
                         'permutation'    : False,
                         'prio_proceed'   : False,
-                        'db'             : 'kanji.db',
+                        'db_relative'    : 'kanji.db',
                         'lang'           : 'en',
                         'keymap'         : 'urwid',
                         'ui_class'       : 'urwid',
