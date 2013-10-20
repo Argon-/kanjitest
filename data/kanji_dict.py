@@ -27,29 +27,36 @@ except ImportError:
 
 class KDict:
 
-    def __init__(self, filename = 'kanji.db', auto_commit=True, return_updated=False):
+    def __init__(self, filename = 'db/kanji.db', auto_commit=True, return_updated=False):
         self.filename = filename
         self.autoci = auto_commit
         self.ret_up = return_updated
         sqlite3.register_converter('JSON', lambda n: json.loads(n.decode('utf-8')))
 
-        self.conn = sqlite3.connect(self.filename, detect_types=sqlite3.PARSE_DECLTYPES|sqlite3.PARSE_COLNAMES)
+        self.conn = sqlite3.connect(self.filename, 
+                                    detect_types=sqlite3.PARSE_DECLTYPES|
+                                                 sqlite3.PARSE_COLNAMES)
         self.c = self.conn.cursor()
         #self.c.row_factory = sqlite3.Row           # access rows with ['rowname'] notation
 
         self.c.execute('PRAGMA foreign_keys = ON')
         self.commit()
+        self.connected = True
 
     def __enter__(self):
         return self
 
     def __exit__(self, etype, value, traceback):
-        self.conn.commit()
-        self.conn.close()
+        if self.connected:
+            self.conn.commit()
+            self.conn.close()
+        self.connected = False
 
     def __del__(self):
-        self.conn.commit()
-        self.conn.close()
+        if self.connected:
+            self.conn.commit()
+            self.conn.close()
+        self.connected = False
 
     def __serialize(self, d):
         #return json.dumps(d, ensure_ascii=False)
@@ -63,7 +70,8 @@ class KDict:
         self.conn.close()
 
     def insert(self, book, kid, d, p = 3):
-        self.c.execute('INSERT INTO kanji VALUES(?, ?, ?, ?)', [kid, book, self.__serialize(d), p])
+        self.c.execute('INSERT INTO kanji VALUES(?, ?, ?, ?)', 
+                       [kid, book, self.__serialize(d), p])
         self.autoci and self.commit()
 
     def select(self, book, from_id, to_id, p_min = 0, p_max = 2**31):
@@ -72,7 +80,9 @@ class KDict:
                           AND    kanji.priority > ?
                           AND    kanji.priority < ?
                           AND    kanji.id < ?
-                          AND    kanji.id > ?''', [book, p_min-1, p_max+1, to_id+1, from_id-1])
+                          AND    kanji.id > ?''', 
+                          [book, p_min-1, p_max+1, to_id+1, from_id-1])
+
         return self.c.fetchall()
 
     def select_keyonly(self, book, from_id, to_id, p_min = 0, p_max = 2**31):
@@ -81,33 +91,42 @@ class KDict:
                           AND    kanji.priority > ?
                           AND    kanji.priority < ?
                           AND    kanji.id < ?
-                          AND    kanji.id > ?''', [book, p_min-1, p_max+1, to_id+1, from_id-1])
+                          AND    kanji.id > ?''', 
+                          [book, p_min-1, p_max+1, to_id+1, from_id-1])
+
         return self.c.fetchall()
 
     def select_all(self, p_min = 0, p_max = 2**31):
         self.c.execute('''SELECT book, id, d, priority FROM kanji
                           WHERE  kanji.priority > ?
-                          AND    kanji.priority < ?''', [p_min-1, p_max+1])
+                          AND    kanji.priority < ?''', 
+                          [p_min-1, p_max+1])
 
         return self.c.fetchall()
 
     def select_all_keyonly(self, p_min = 0, p_max = 2**31):
         self.c.execute('''SELECT book, id FROM kanji
                           WHERE  kanji.priority > ?
-                          AND    kanji.priority < ?''', [p_min-1, p_max+1])
+                          AND    kanji.priority < ?''', 
+                          [p_min-1, p_max+1])
+
         return self.c.fetchall()
 
     def select_one(self, book, kid):
         self.c.execute('''SELECT book, id, d, priority FROM kanji
                           WHERE  kanji.book = ?
-                          AND    kanji.id = ?''', [book, kid])
+                          AND    kanji.id = ?''', 
+                          [book, kid])
+
         return self.c.fetchall()[0]
 
     def update(self, book, kid, d):
         self.c.execute('''UPDATE kanji
                           SET    d = ?
                           WHERE  kanji.book = ?
-                          AND    kanji.id = ?''', [self.__serialize(d), book, kid])
+                          AND    kanji.id = ?''', 
+                          [self.__serialize(d), book, kid])
+
         self.autoci and self.commit()
         if self.ret_up:
             return self.select_one(book, kid)
@@ -117,7 +136,9 @@ class KDict:
         self.c.execute('''UPDATE kanji
                           SET    priority = ?
                           WHERE  kanji.book = ?
-                          AND    kanji.id = ?''', [p, book, kid])
+                          AND    kanji.id = ?''', 
+                          [p, book, kid])
+
         self.autoci and self.commit()
         if self.ret_up:
             return self.select_one(book, kid)
@@ -125,7 +146,9 @@ class KDict:
     def delete(self, book, kid):
         self.c.execute('''DELETE FROM kanji
                           WHERE  kanji.book = ?
-                          AND    kanji.id = ?''', [book, kid])
+                          AND    kanji.id = ?''', 
+                          [book, kid])
+        
         self.autoci and self.commit()
 
     

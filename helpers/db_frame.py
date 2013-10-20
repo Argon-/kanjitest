@@ -29,8 +29,8 @@ def get_db():
     try:
         loc = sys.argv[1]
     except (NameError, IndexError):
-        print('No filename given, asuming "kanji.db"')
-        loc = 'kanji.db'
+        print('No filename given, asuming "db/kanji.db"')
+        loc = 'db/kanji.db'
 
 
     sqlite3.register_converter("JSON", json.loads)

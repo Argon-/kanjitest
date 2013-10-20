@@ -6,7 +6,7 @@
                 "genki1=1:20", 
                 "genki2=2:10"
             ], 
-            "db_relative": "kanji.db", 
+            "db_relative": "db/kanji.db", 
             "exit": false, 
             "exp": 4, 
             "keydebug": false, 
@@ -15,7 +15,7 @@
             "low_mem": false, 
             "p_max": 100, 
             "p_min": 4, 
-            "permutation": false,
+            "permutation": true,
             "print_selected": false, 
             "prio_proceed": false, 
             "prompt_list": "meaning", 

@@ -35,16 +35,33 @@ from helpers.func import db_list_to_string
 from helpers.func import max_priority
 
 
-
 ####################
 # argument parsing #
 ####################
+
+# ugly hack to bypass the config<->argparse circular dependency
+# take the argument after --profile and forbid profiles starting with '-' as a 
+# cheap argument detection, everything else is too much effort for an interim approach
+
+interim_prf = 'default'
+for e in sys.argv:
+    if e is '--profile' or e is '-pr':
+        i = sys.argv.index(e) + 1
+        if i < len(sys.argv) and not sys.argv.startswith('-'):
+            interim_prf = sys.argv[i]
+            del sys.argv[i]
+            del sys.argv[i-1]
+        else:
+            raise argparse.ArgumentError('argument --profile: no valid argument given')
+
 
 args = CArgs()
 parser = argparse.ArgumentParser(#description='Specify the kanji you want to test.',
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                  add_help=False)
-conf = Config('config.json', os.path.dirname(os.path.abspath( __file__ )) + os.sep)    # TODO: 
+conf = Config('config.json', 
+              os.path.dirname(os.path.abspath(__file__)) + os.sep, 
+              profile=interim_prf)
 
 add_parser_args(parser, conf)
 parser.parse_args(namespace=args)
@@ -64,7 +81,6 @@ args.choice = expand_choice(args.choice)
 UI_Controller = getattr(import_module('ui.' + args.ui_class), 'UI_Controller')
 
 
-
 ##########################
 # gather requested kanji #
 ##########################
@@ -82,6 +98,10 @@ else:
             l += k.select_keyonly(d['book'], d['from'], d['to'], args.p_min, args.p_max)
         else:
             l += k.select(d['book'], d['from'], d['to'], args.p_min, args.p_max)
+
+if len(l) < 2 and not args.no_scheck:
+    print('[main] Error: number of selected kanji is too small (' + str(len(l)) + ')')
+    sys.exit(1)
 
 if args.print_selected:
     if args.low_mem:
@@ -135,7 +155,7 @@ def update_priority(ui, p_new):
 
 def input_handler(ui, key):
     if rnd.current is None and not ui.is_key(key, 'exit'):
-        reveal_or_next(ui, force=True)           # start no matter what key was pressed (except exit)
+        reveal_or_next(ui, force=True)           # start no matter what key was pressed (except exit) and
         return                                   # ignore the key
 
     if ui.is_key(key, 'exit'):
@@ -173,7 +193,6 @@ def input_handler(ui, key):
         args.verbosity > 0 and print('[keydebug] ' + str(key))
     else:
         ui.redraw()
-
 
 
 #############

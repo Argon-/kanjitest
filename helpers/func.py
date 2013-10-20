@@ -87,11 +87,11 @@ def add_parser_args(parser, c):
     parser.add_argument('--prioproceed', '-pp', dest='prio_proceed', action='store_true',
                     default=c.get('prio_proceed', False), required=False,
                     help='Assigning a priority acts like `proceed`.')
-    #parser.add_argument('--profile', '-pr', dest='profile', metavar='myprofile',
-    #                default='default', action='store', type=str, required=False,
-    #                help='A profile specified in your configuration file.')
+    parser.add_argument('--profile', '-pr', dest='profile', metavar='myprofile',
+                    default='default', action='store', type=str, required=False,
+                    help='A profile specified in your configuration file. A valid profile name must not start with a dash.')
     parser.add_argument('--database', '-db', dest='db', metavar='your.db',
-                    default=c.get('db_relative', 'kanji.db'), action='store', type=str, required=False,
+                    default=c.get('db_relative', 'db/kanji.db'), action='store', type=str, required=False,
                     help='The location of your kanji sqlite3 database.')
     #parser.add_argument('--config', '-c', dest='config', metavar='conf.json',
     #                default='', action='store', type=str, required=False,
@@ -111,7 +111,7 @@ def add_parser_args(parser, c):
     parser.add_argument('--small_footprint', '-sp', '-lm', dest='low_mem', action='store_true',
                     default=c.get('low_mem', False), required=False,
                     help='Decrease memory usage. Results in slightly increased load times for displaying a sign.')
-    parser.add_argument('--no_sanity_check', dest='no_scheck', action='store_true',
+    parser.add_argument('--no_sanity_checks', dest='no_scheck', action='store_true',
                     default=c.get('no_scheck', False), required=False,
                     help='Perform sanity checks on various values like priority.')
     parser.add_argument('--verbose', '-v', dest='verbosity', action='count',
