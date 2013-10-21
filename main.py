@@ -44,30 +44,32 @@ from helpers.func import max_priority
 # cheap argument detection, everything else is too much effort for an interim approach
 
 interim_prf = 'default'
-for e in sys.argv:
-    if e is '--profile' or e is '-pr':
+for e in sys.argv[1:]:
+    if e == '--profile' or e == '-pr':
         i = sys.argv.index(e) + 1
-        if i < len(sys.argv) and not sys.argv.startswith('-'):
+        if i < len(sys.argv) and not sys.argv[i].startswith('-'):
             interim_prf = sys.argv[i]
             del sys.argv[i]
             del sys.argv[i-1]
-        else:
-            raise argparse.ArgumentError('argument --profile: no valid argument given')
-
 
 args = CArgs()
 parser = argparse.ArgumentParser(#description='Specify the kanji you want to test.',
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter,
                                  add_help=False)
-conf = Config('config.json', 
-              os.path.dirname(os.path.abspath(__file__)) + os.sep, 
-              profile=interim_prf)
+conf = None
+try:
+    conf = Config('config.json', 
+                  os.path.dirname(os.path.abspath(__file__)) + os.sep, 
+                  profile=interim_prf)
 
-add_parser_args(parser, conf)
-parser.parse_args(namespace=args)
+    add_parser_args(parser, conf)
+    parser.parse_args(namespace=args)
 
-conf.language = args.lang
-conf.keymap = args.keymap
+    conf.language = args.lang
+    conf.keymap = args.keymap
+except Configuration_Exception as e:
+    print('[config] Error: ' + str(e))
+    sys.exit(1)
 
 if args.permutation:
     args.exp = 0
