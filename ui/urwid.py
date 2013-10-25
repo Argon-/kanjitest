@@ -56,7 +56,7 @@ class UI_Controller(Meta_UI_Controller):
         self.screen.register_palette(palette)
 
 
-    def initialize(self, colors=16, palette=default_palette, static_sign_labels=True, div1 = 1, div2 = 1, div3 = 3):
+    def initialize(self, colors=16, palette=default_palette, static_sign_labels=True, div1 = 2, div2 = 2, div3 = 3):
         div1, div2, div3 = div1-1, div2-1, div3-1
         self.static_labels = static_sign_labels
         self.init_screen(colors, palette)
