@@ -189,8 +189,8 @@ class UI_Controller(Meta_UI_Controller):
         self.set_sign(j(d['sign']))
         self.set_onyomi(padd(j(d['on']), j(d['kun']))[0])
         self.set_kunyomi(padd(j(d['on']), j(d['kun']))[1])
-        self.set_meaning(j(d['meaning']), '; ')
-        self.set_misc(j(d['misc']), '; ')
+        self.set_meaning(j(d['meaning'], '; '))
+        self.set_misc(j(d['misc'], '; '))
 
 
     def __set_footer_columns_content(self, id, attr_map, text, alignment):
