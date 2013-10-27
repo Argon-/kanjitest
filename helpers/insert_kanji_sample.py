@@ -50,7 +50,7 @@ l = l + [
                            on      = [u'いち', u'いっ'], 
                            kun     = [u'ひと'], 
                            meaning = [u'one'], 
-                           misc    = [u'一人（ひとり）one; 一分（いっぷん）one minute'])], 
+                           misc    = [u'一人（ひとり）one', u'一分（いっぷん）one minute'])], 
 
 ['genki1',   2, prio, dict(sign     = u'二', 
                            on      = [u'に'], 
