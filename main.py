@@ -145,6 +145,7 @@ def reveal_or_next(ui, force=False, go_back=False):
     else:                                        # reveal
         reveal_or_next.revealed = True
         ui.reveal_current_sign()
+    ui.set_set_size(len(l))
 
 reveal_or_next.revealed = False
 

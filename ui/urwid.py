@@ -92,8 +92,9 @@ class UI_Controller(Meta_UI_Controller):
         self.footer_columns = urwid.Columns([
                         ('weight', 1, urwid.Text(('footer_prio', self.tr('footer_prio', priority='-')), align='left')),
                         ('weight', 1, footer_desc),
-                        ('weight', 1, urwid.Text(('footer_desc', ' ' * len(self.tr('footer_prio', priority='0'))), align='right')),
-                       ], dividechars=2, min_width=len(self.tr('footer_prio', priority='0')))
+                        ('weight', 1, urwid.Text(('footer_desc', self.tr('footer_ssize', set_size='-')), align='right')),
+                       ], dividechars=2#, min_width=len(self.tr('footer_prio', priority='0'))
+                       )
 
         self.body_pile = urwid.Pile([
                         ('weight', 1, urwid.Text(('body_sign',     self.tr('startup_sign')),   align='center')),
@@ -275,10 +276,15 @@ class UI_Controller(Meta_UI_Controller):
         self.__set_footer_columns_content(0, 'footer_prio', self.tr('footer_prio', priority=str(priority)), 'left')
 
 
+    def set_set_size(self, size):
+        self.__set_footer_columns_content(2, 'footer_desc', self.tr('footer_ssize', set_size=str(size)), 'right')
+
+
     def to_priority(self, key):
         if not key:
             return -999                 # TODO: get rid of magic number
         return int(key)
+
 
 
     def redraw(self):
