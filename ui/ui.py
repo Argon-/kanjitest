@@ -144,6 +144,12 @@ class Meta_UI_Controller(object, metaclass=abc.ABCMeta):
         '''
         pass
 
+    @abc.abstractmethod
+    def set_set_size(self, size):
+        '''
+        Set the kanji list's size.
+        '''
+        pass
 
     @abc.abstractmethod
     def to_priority(self, key=None):
