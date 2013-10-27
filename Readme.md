@@ -23,7 +23,14 @@ There's no installation procedure (currently). Create an alias or whatever suits
 
     alias kanjitest='python3 <path to kanjitest folder>/main.py'
 
-You have to supply the script a sqlite3 database. The data of each kanji is stored in a single dictionary, associated with a textbook, an id (referring to the textbook), a priority and altogether saved as one row. There are very rudimental scripts for the table structure, creating and inserting values in `helpers`.
+You have to supply the script a sqlite3 database. The data of each kanji is stored in a single dictionary, associated with a textbook, an id (referring to the textbook), a priority and altogether saved as one row. There are rudimental scripts for the table structure, creating and inserting values in `helpers`.
+
+
+Currently *not* supported
+-------------------------
+
+- Going back the sequence of already prompted kanji (I'm not willing to remember them)
+- Drop a kanji out of the current set if its properties got changed and no longer qualify for your selection, e.g. decreased priority (would be possible; it's more a choice of design - yes/no?)
 
 
 Requirements
