@@ -31,6 +31,7 @@ Currently *not* supported
 
 - Going back the sequence of already prompted kanji (I'm not willing to remember them)
 - Drop a kanji out of the current set if its properties got changed and no longer qualify for your selection, e.g. decreased priority (would be possible; it's more a choice of design - yes/no?)
+- There are no UI related config files (I'm indecisive about *who* should manage them *where*. UIs are not part of the 'core' and intented to be interchangeable elements)
 
 
 Requirements
