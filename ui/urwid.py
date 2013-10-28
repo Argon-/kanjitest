@@ -174,6 +174,32 @@ class UI_Controller(Meta_UI_Controller):
         return False
 
 
+    def blubb(self, which, text, force_reveal=False):
+        self.pile_related_data[which][1] = text
+        t = ''
+        if self.static_labels:
+            t += self.tr('label_' + which)
+        if self.pile_related_data[which][0].state or force_reveal:
+            t += text
+        if self.static_labels:
+            t += self.tr('label_' + which + '_suffix')
+        return t
+
+
+    def __set_footer_columns_content(self, id, attr_map, text, alignment):
+        try:
+            self.footer_columns.contents[id] = (urwid.Text((attr_map, text), align=alignment), self.footer_columns.options('weight', 1))
+        except IndexError:
+            pass
+
+
+    def __set_body_pile_content(self, id, attr_map, text, alignment):
+        try:
+            self.body_pile.contents[id] = (urwid.Text((attr_map, text), align=alignment), self.body_pile.options('weight', 1))
+        except IndexError:
+            pass
+
+
     def display_sign(self, d, p):
         # Change hard coded strings below with caution - they're all fullwidth characters.
         # Needed because len() counts a char as 1, disregarding its width. 
@@ -194,78 +220,24 @@ class UI_Controller(Meta_UI_Controller):
         self.set_misc(j(d['misc'], '; '))
 
 
-    def __set_footer_columns_content(self, id, attr_map, text, alignment):
-        try:
-            self.footer_columns.contents[id] = (urwid.Text((attr_map, text), align=alignment), self.footer_columns.options('weight', 1))
-        except IndexError:
-            pass
-
-
-    def __set_body_pile_content(self, id, attr_map, text, alignment):
-        try:
-            self.body_pile.contents[id] = (urwid.Text((attr_map, text), align=alignment), self.body_pile.options('weight', 1))
-        except IndexError:
-            pass
-
-
     def set_sign(self, text, alignment='center', force_reveal=False):
-        self.pile_related_data['sign'][1] = text
-        t = ''
-        if self.static_labels:
-            t += self.tr('label_sign')
-        if self.pile_related_data['sign'][0].state or force_reveal:
-            t += text
-        if self.static_labels:
-            t += self.tr('label_sign_suffix')
-        self.__set_body_pile_content(0, 'body_sign', t, alignment)
+        self.__set_body_pile_content(0, 'body_sign', self.blubb('sign', text, force_reveal), alignment)
 
 
     def set_onyomi(self, text, alignment='center', force_reveal=False):
-        self.pile_related_data['on'][1] = text
-        t = ''
-        if self.static_labels:
-            t += self.tr('label_on')
-        if self.pile_related_data['on'][0].state or force_reveal:
-            t += text
-        if self.static_labels:
-            t += self.tr('label_on_suffix')
-        self.__set_body_pile_content(2, 'body_on', t, alignment)
+        self.__set_body_pile_content(2, 'body_on', self.blubb('on', text, force_reveal), alignment)
 
 
     def set_kunyomi(self, text, alignment='center', force_reveal=False):
-        self.pile_related_data['kun'][1] = text
-        t = ''
-        if self.static_labels:
-            t += self.tr('label_kun')
-        if self.pile_related_data['kun'][0].state or force_reveal:
-            t += text
-        if self.static_labels:
-            t += self.tr('label_kun_suffix')
-        self.__set_body_pile_content(3, 'body_kun', t, alignment)
+        self.__set_body_pile_content(3, 'body_kun', self.blubb('kun', text, force_reveal), alignment)
 
 
     def set_meaning(self, text, alignment='center', force_reveal=False):
-        self.pile_related_data['meaning'][1] = text
-        t = ''
-        if self.static_labels:
-            t += self.tr('label_meaning')
-        if self.pile_related_data['meaning'][0].state or force_reveal:
-            t += text
-        if self.static_labels:
-            t += self.tr('label_meaning_suffix')
-        self.__set_body_pile_content(5, 'body_meaning', t, alignment)
+        self.__set_body_pile_content(5, 'body_meaning', self.blubb('meaning', text, force_reveal), alignment)
 
 
     def set_misc(self, text, alignment='center', force_reveal=False):
-        self.pile_related_data['misc'][1] = text
-        t = ''
-        if self.static_labels:
-            t += self.tr('label_misc')
-        if self.pile_related_data['misc'][0].state or force_reveal:
-            t += text
-        if self.static_labels:
-            t += self.tr('label_misc_suffix')
-        self.__set_body_pile_content(7, 'body_misc', t, alignment)
+        self.__set_body_pile_content(7, 'body_misc', self.blubb('misc', text, force_reveal), alignment)
 
 
     def set_flips(self, flips):
