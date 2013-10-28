@@ -174,7 +174,7 @@ class UI_Controller(Meta_UI_Controller):
         return False
 
 
-    def blubb(self, which, text, force_reveal=False):
+    def process_text(self, which, text, force_reveal=False):
         self.pile_related_data[which][1] = text
         t = ''
         if self.static_labels:
@@ -221,23 +221,23 @@ class UI_Controller(Meta_UI_Controller):
 
 
     def set_sign(self, text, alignment='center', force_reveal=False):
-        self.__set_body_pile_content(0, 'body_sign', self.blubb('sign', text, force_reveal), alignment)
+        self.__set_body_pile_content(0, 'body_sign', self.process_text('sign', text, force_reveal), alignment)
 
 
     def set_onyomi(self, text, alignment='center', force_reveal=False):
-        self.__set_body_pile_content(2, 'body_on', self.blubb('on', text, force_reveal), alignment)
+        self.__set_body_pile_content(2, 'body_on', self.process_text('on', text, force_reveal), alignment)
 
 
     def set_kunyomi(self, text, alignment='center', force_reveal=False):
-        self.__set_body_pile_content(3, 'body_kun', self.blubb('kun', text, force_reveal), alignment)
+        self.__set_body_pile_content(3, 'body_kun', self.process_text('kun', text, force_reveal), alignment)
 
 
     def set_meaning(self, text, alignment='center', force_reveal=False):
-        self.__set_body_pile_content(5, 'body_meaning', self.blubb('meaning', text, force_reveal), alignment)
+        self.__set_body_pile_content(5, 'body_meaning', self.process_text('meaning', text, force_reveal), alignment)
 
 
     def set_misc(self, text, alignment='center', force_reveal=False):
-        self.__set_body_pile_content(7, 'body_misc', self.blubb('misc', text, force_reveal), alignment)
+        self.__set_body_pile_content(7, 'body_misc', self.process_text('misc', text, force_reveal), alignment)
 
 
     def set_flips(self, flips):
