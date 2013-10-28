@@ -18,21 +18,22 @@
 #
 
 import os, sys, argparse, locale, signal
-from functools import partial
 # Use the system default locale.
 # UTF8 is required, modify if necessary.
 locale.setlocale(locale.LC_ALL, '')
 
+from functools import partial
 from importlib import import_module
 from rand.ldrand import LDRand
-from data.kanji_dict import KDict
 from data.config import Config
 from data.config import Configuration_Exception
+from data.kanji_dict import KDict
 from helpers.func import expand_choice
 from helpers.func import add_parser_args
 from helpers.func import CArgs
 from helpers.func import db_list_to_string
 from helpers.func import max_priority
+
 
 
 ####################
@@ -80,7 +81,12 @@ if not os.path.isfile(args.db):
     sys.exit(1)
 
 args.choice = expand_choice(args.choice)
-UI_Controller = getattr(import_module('ui.' + args.ui_class), 'UI_Controller')
+
+try:
+    UI_Controller = getattr(import_module('ui.' + args.ui_class), 'UI_Controller')
+except ImportError as e:
+    print('[ui] Error: ' + str(e) + ' (requested ui class: \'' + args.ui_class + '\')')
+    sys.exit(1)
 
 
 ##########################
