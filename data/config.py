@@ -49,6 +49,11 @@ class Config(object):
         self.strict_profile = strict_profile
         self.strict_lang = strict_lang
         self.strict_keymap = strict_keymap
+
+        self.profile = 'default'
+        self.lang = 'en'
+        self.kmap = 'default'
+        
         self.__load_config()
         self.__set_profile(profile)
         self.__set_lang(lang)
@@ -76,7 +81,7 @@ class Config(object):
                 if 'db_relative' in self.settings[prf]:
                     self.settings[prf]['db_relative'] = self.relpath + self.settings[prf]['db_relative'] # horrible
         except FileNotFoundError as e:
-            self.get('quiet', False) or print('[config] Error: no file found for ' + str(self.conffile))
+            self.get('quiet', False) or print('[config] Warning: no file found for ' + str(self.conffile))
             self.get('quiet', False) or print('[config] falling back to default values')
 
 
