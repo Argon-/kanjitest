@@ -132,7 +132,7 @@ class Meta_UI_Controller(object, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def set_flips(self, flips):
         '''
-        Set the number of flips (a value provided from LDRand).
+        Set the number of flips (a value provided by LDRand).
         '''
         pass
 

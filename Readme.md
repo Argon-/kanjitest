@@ -5,7 +5,7 @@ kanjitest
 
 A little command line tool to help you learn your kanji. It works like flip cards - there's no actual user input like drawing a sign. It's probably far from being finished and has a few deficits in its current design but it works. It was created in a rush to prevent me from drowning in physical flip cards and since it does exactly what I need (for now), further improvements are unlikely (for now).
 
-Currently there's only a text-based user interface.
+Currently there's only a text-based user interface. Additional interfaces are supported, just subclass `ui/ui.py` (see `ui/urwid.py` for reference).
 
 
 How it works
