@@ -79,6 +79,8 @@ if args.quiet:
 if not os.path.isfile(args.db):
     print('[db] Error: no file found for: ' + str(args.db))
     sys.exit(1)
+if args.p_max < args.p_min and not args.no_scheck:  # assume someone lowered p_max but forgot about p_min
+    args.p_min = args.p_max
 
 args.choice = expand_choice(args.choice)
 
