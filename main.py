@@ -40,7 +40,7 @@ from helpers.func import max_priority
 # argument parsing #
 ####################
 
-# ugly hack to bypass the config<->argparse circular dependency
+# ugly hack to bypass the config<->argparse circular dependency regarding --profile
 # take the argument after --profile and forbid profiles starting with '-' as a 
 # cheap argument detection, everything else is too much effort for an interim approach
 
