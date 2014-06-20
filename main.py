@@ -20,7 +20,7 @@
 import os, sys, argparse, locale, signal
 # Use the system default locale.
 # UTF8 is required, modify if necessary.
-locale.setlocale(locale.LC_ALL, '')
+#locale.setlocale(locale.LC_ALL, '')
 
 from functools import partial
 from importlib import import_module
@@ -219,6 +219,7 @@ try:
     ui.register_callbacks(input_handler=partial(input_handler, ui))
     ui.initialize(colors=256)
     ui.set_initial_visibility(*args.prompt_list)
+    ui.set_set_size(len(l))
     ui.run()
 except Exception as e:
     args.verbosity > 0 and print('[main] Error: ' + str(e))
