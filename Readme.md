@@ -15,6 +15,9 @@ Kanji are read from a database (see **Setup**) and filtered depending on your co
 
 Only previously configured fields are visible, a subsequent (configurable) keypress reveals the whole dataset. You can change the priority of the currently displayed kanji.
 
+Once properly set up the result might look like this (screenshot with all fields revealed):
+![Screenshot with all fields revealed](img/screenshot1.png)
+
 
 Setup
 -----
