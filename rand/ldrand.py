@@ -45,7 +45,10 @@ class LDRand(object):
 
     def next(self):
         cd = random.randint(0, sum(self.__dist) - 1)
-        dist_old = str(self.__dist)
+
+        dist_old = ''
+        if self.__debug:
+            dist_old = str(self.__dist)
 
         for i in range(self.__len):
             cd -= self.__dist[i]
