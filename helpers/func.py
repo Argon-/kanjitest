@@ -75,7 +75,7 @@ def add_parser_args(parser, c):
     parser.add_argument('--priority', '-pmin', '-p', dest='p_min', metavar='n',
                     default=c.get('p_min', 4), action='store', type=int, required=False,
                     help='The min required priority for a kanji to be eligible.')
-    parser.add_argument('--priority_max', '-pmax', dest='p_max', metavar='n',
+    parser.add_argument('--priority-max', '-pmax', dest='p_max', metavar='n',
                     default=c.get('p_max', max_priority()), action='store', type=int, required=False,
                     help='The max allowed priority for a kanji to be eligible.')
     parser.add_argument('--depth', '-d', dest='exp', metavar='n',
@@ -84,7 +84,7 @@ def add_parser_args(parser, c):
     parser.add_argument('--perm', '-pm',dest='permutation', action='store_true',
                     default=c.get('permutation', False), required=False,
                     help='Alias for --depth 0. (takes precedence)')
-    parser.add_argument('--prioproceed', '-pp', dest='prio_proceed', action='store_true',
+    parser.add_argument('--prio-proceed', '-pp', dest='prio_proceed', action='store_true',
                     default=c.get('prio_proceed', False), required=False,
                     help='Assigning a priority acts like `proceed`.')
     parser.add_argument('--profile', '-pr', dest='profile', metavar='myprofile',
@@ -102,16 +102,16 @@ def add_parser_args(parser, c):
     parser.add_argument('--keymap', '-km', dest='keymap', metavar='default',
                     default=c.get('keymap', 'urwid'), action='store', type=str, required=False,
                     help='The keymap dictionary to load.')
-    parser.add_argument('--ui', dest='ui_class', choices=['urwid'],
-                    default=c.get('ui_class', 'urwid'), action='store', type=str, required=False,
+    parser.add_argument('--ui', dest='ui_class', metavar='urwid_ui',
+                    default=c.get('ui_class', 'urwid_ui'), action='store', type=str, required=False,
                     help='The UI module name to load.')
     parser.add_argument('--print', '-prt',dest='print_selected', action='store_true',
                     default=c.get('print_selected', False), required=False,
                     help='Print the selected kanji.')
-    parser.add_argument('--small_footprint', '-sp', '-lm', dest='low_mem', action='store_true',
+    parser.add_argument('--small-footprint', '-sp', '-lm', dest='low_mem', action='store_true',
                     default=c.get('low_mem', False), required=False,
                     help='Decrease memory usage. Results in slightly increased load times for displaying a sign.')
-    parser.add_argument('--no_sanity_checks', dest='no_scheck', action='store_true',
+    parser.add_argument('--no-sanity-checks', dest='no_scheck', action='store_true',
                     default=c.get('no_scheck', False), required=False,
                     help='Perform sanity checks on various values like priority.')
     parser.add_argument('--verbose', '-v', dest='verbosity', action='count',

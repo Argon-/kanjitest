@@ -21,7 +21,7 @@
             "prompt_list": "meaning", 
             "quiet": false, 
             "no_scheck" : false,
-            "ui_class": "urwid", 
+            "ui_class": "urwid_ui", 
             "verbosity": 1
         }
     },
